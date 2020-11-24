@@ -36,7 +36,8 @@
                         </div>
                     </div>
                 </div>
-            </div><div class="col-lg-3 col-md-6 col-sm-6 col-12">
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-12">
                 <div class="card card-statistic-1">
                     <div class="card-icon bg-info">
                         <i class="fas fa-users"></i>
@@ -50,21 +51,22 @@
                         </div>
                     </div>
                 </div>
-            </div><div class="col-lg-3 col-md-6 col-sm-6 col-12">
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-12">
                 <div class="card card-statistic-1">
                     <div class="card-icon bg-success">
                         <i class="fas fa-warehouse"></i>
                     </div>
                     <div class="card-wrap">
                         <div class="card-header">
-                            <h4>Stadion</h4>
+                            <h4>Lapangan</h4>
                         </div>
                         <div class="card-body">
-                            <h6>30</h6>
+                            <h6>4</h6>
                         </div>
                     </div>
                 </div>
-            </div>               
+            </div>
         </div>
     </div>
 </section>

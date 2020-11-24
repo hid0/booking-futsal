@@ -6,8 +6,8 @@
 <ul class="navbar-nav navbar-right">
     <li class="dropdown">
         <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-            <img alt="image" src="<?=base_url('assets/img/avatar.png')?>" class="rounded-circle mr-1">
-            <div class="d-sm-none d-lg-inline-block">Nama</div>
+            <img alt="image" src="<?= base_url('assets/img/avatar.png') ?>" class="rounded-circle mr-1">
+            <div class="d-sm-none d-lg-inline-block"><?= $users['name']; ?></div>
         </a>
         <div class="dropdown-menu dropdown-menu-right">
             <div class="dropdown-title">
@@ -17,11 +17,11 @@
                 @endif --}}
                 <span class="text-success">Akun Terverifikasi</span>
             </div>
-            <a href="<?=base_url('setting')?>" class="dropdown-item has-icon">
+            <a href="<?= base_url('setting') ?>" class="dropdown-item has-icon">
                 <i class="fas fa-cog"></i> Settings
             </a>
             <div class="dropdown-divider"></div>
-            <a href="<?=base_url('auth/logout')?>" class="dropdown-item has-icon text-danger">
+            <a href="<?= base_url('auth/logout') ?>" class="dropdown-item has-icon text-danger">
                 <i class="fas fa-sign-out-alt"></i> Logout
             </a>
         </div>

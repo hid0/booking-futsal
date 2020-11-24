@@ -1,6 +1,7 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<?php defined('BASEPATH') or exit('No direct script access allowed');
 
-class Auth extends CI_Controller {
+class Auth extends CI_Controller
+{
 
     public function __construct()
     {
@@ -14,7 +15,7 @@ class Auth extends CI_Controller {
         $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
         $this->form_validation->set_rules('password', 'Password', 'trim|required');
         if ($this->form_validation->run() == false) {
-            $data['title'] = 'SI FUTSAL ~ Login Page';
+            $data['title'] = 'Login';
             // $this->load->view('auth/login', $data);
             $this->template->load('layouts/auth', 'auth/login', $data);
         } else {
@@ -38,10 +39,17 @@ class Auth extends CI_Controller {
                 if (password_verify($password, $user['password'])) {
                     $data = [
                         'email' => $user['email'],
+                        'name' => $user['name'],
                         'role_id' => $user['role_id']
                     ];
                     $this->session->set_userdata($data);
-                    redirect('home');
+                    if ($user['role_id'] == 1) {
+                        redirect('dashboard/adm');
+                    } else if ($user['role_id'] == 2) {
+                        redirect('dashboard/op');
+                    } else {
+                        redirect('home');
+                    }
                 } else {
                     $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                     Wrong password!</div>');
@@ -74,9 +82,8 @@ class Auth extends CI_Controller {
 
 
         if ($this->form_validation->run() == false) {
-            $data['title'] = 'SI FUTSAL ~ Registration';
-            $this->load->view('templates/auth_header', $data);
-            $this->load->view('auth/registration');
+            $data['title'] = 'Registration | SIFutsal';
+            $this->load->view('auth/registration', $data);
         } else {
             $data = [
                 'name' => htmlspecialchars($this->input->post('name', true)),
