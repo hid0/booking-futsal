@@ -85,19 +85,111 @@ class Auth extends CI_Controller
             $data['title'] = 'Registration | SIFutsal';
             $this->load->view('auth/registration', $data);
         } else {
+            $email = $this->input->post('email', true);
             $data = [
                 'name' => htmlspecialchars($this->input->post('name', true)),
-                'email' => htmlspecialchars($this->input->post('email', true)),
+                'email' => htmlspecialchars($email),
                 'password' => password_hash($this->input->post('password1'), PASSWORD_DEFAULT),
-                'role_id' => 1,
+                'role_id' => 3,
                 'profil' => 'avatar.png',
-                'is_active' => 1,
+                'is_active' => 0,
+                'date_created' => time()
+            ];
+
+            // Siapkan token
+            $token = base64_encode(random_bytes(32));
+            $user_token = [
+                'email' => $email,
+                'token' => $token,
                 'date_created' => time()
             ];
 
             $this->db->insert('users', $data);
+            $this->db->insert('user_token', $user_token);
+
+            $this->_sendEmail($token, 'verify');
+
             $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-            Congratulation! your account has been created. Please Login!</div>');
+            Congratulation! your account has been created. Please activate your account!</div>');
+            redirect('auth');
+        }
+    }
+
+    private function _sendEmail($token, $type)
+    {
+        $config = [
+            'protocol'  => 'smtp',
+            'smtp_host' => 'ssl://smtp.gmail.com',
+            'smtp_user' => 'sifutsal.adm@gmail.com',
+            'smtp_pass' => 'sifutsal123',
+            'smtp_port' => 465,
+            'mailtype'  => 'html',
+            'charset'   => 'utf-8',
+            'newline'   => "\r\n"
+        ];
+
+        $this->load->library('email', $config);
+        $this->email->initialize($config);
+
+        $this->email->from('sifutsal.adm@gmail.com', 'Si Futsal Admin');
+        $this->email->to($this->input->post('email'));
+
+        if ($type == 'verify') {
+            $this->email->subject('Account Verification');
+            $this->email->message('Click this link to verify your account : <a href="'
+                . base_url() . 'auth/verify?email=' . $this->input->post('email') .
+                '&token=' . urlencode($token) . '">Activate</a>');
+        }
+
+        if ($this->email->send()) {
+            return true;
+        } else {
+            echo $this->email->print_debugger();
+            die;
+        }
+    }
+
+    public function verify()
+    {
+        $email = $this->input->get('email');
+        $token = $this->input->get('token');
+
+        $user = $this->db->get_where('users', ['email' => $email])->row_array();
+
+        if ($user) {
+            $user_token = $this->db->get_where('user_token', ['token' => $token])->row_array();
+            if ($user_token) {
+                if (time() - $user_token['date_created'] < (60 * 60 * 24)) {
+                    $this->db->set('is_active', 1);
+                    $this->db->where('email', $email);
+                    $this->db->update('users');
+
+                    $this->db->delete('user_token', ['email' => $email]);
+
+                    $this->session->set_flashdata('message', '<div class="alert 
+                    alert-success alert-dismissible" role="alert"><button type="button" 
+                    class="close" data-dismiss="alert" aria-hidden="true">×</button>' . $email . ' has been activated! Please login.</div>');
+                    redirect('auth');
+                } else {
+
+                    $this->db->delete('users', ['email' => $email]);
+                    $this->db->delete('user_token', ['email' => $email]);
+
+                    $this->session->set_flashdata('message', '<div class="alert 
+                    alert-danger alert-dismissible" role="alert"><button type="button" 
+                    class="close" data-dismiss="alert" aria-hidden="true">×</button>Account activation failed! Token expired.</div>');
+                    redirect('auth');
+                }
+            } else {
+                $this->session->set_flashdata('message', '<div class="alert 
+                alert-danger alert-dismissible" role="alert"><button type="button" 
+                class="close" data-dismiss="alert" aria-hidden="true">×</button>Account activation failed! Wrong token.</div>');
+                redirect('auth');
+            }
+        } else {
+            $this->session->set_flashdata('message', '<div class="alert 
+            alert-danger alert-dismissible" role="alert"><button type="button" 
+            class="close" data-dismiss="alert" aria-hidden="true">×</button>Account activation failed! Wrong email.</div>');
             redirect('auth');
         }
     }
@@ -109,5 +201,10 @@ class Auth extends CI_Controller
 
         $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>You have been logged out!</div>');
         redirect('auth');
+    }
+
+    public function blocked()
+    {
+        echo 'Access Blocked!';
     }
 }
