@@ -5,6 +5,7 @@
     <div class="sidebar-brand sidebar-brand-sm">
         <a href="">SIF</a>
     </div>
+    <!-- menu semua role user -->
     <ul class="sidebar-menu">
         <li class="menu-header">dashboard</li>
         <li class="active">
@@ -13,6 +14,7 @@
                 <span>Dashboard</span>
             </a>
         </li>
+        <!-- menampilkan menu untuk role tertentu -->
         <li class="menu-header">Master Data</li>
         <li class="dropdown">
             <a class="nav-link has-dropdown" href="">
@@ -27,7 +29,9 @@
                 <li><a href="#" class="nav-link">Data Lapangan</a></li>
                 <li><a href="#" class="nav-link">Data Harga</a></li>
                 <!-- jika login role nya administrator saja -->
+                <?php if($users['role_id'] == 1): ?>
                 <li><a href="#" class="nav-link">Data Operator</a></li>
+                <?php endif; ?>
             </ul>
         </li>
         <li>

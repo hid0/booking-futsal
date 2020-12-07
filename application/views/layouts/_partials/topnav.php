@@ -11,11 +11,8 @@
         </a>
         <div class="dropdown-menu dropdown-menu-right">
             <div class="dropdown-title">
-                {{-- @if (Auth::user()->remember_token == NULL)
-                <span class="text-danger">Akun Belum Verifikasi</span>
-                @else
-                @endif --}}
-                <span class="text-success">Akun Terverifikasi</span>
+                <!-- <span class="text-danger">Akun Belum Verifikasi</span>
+                <span class="text-success">Akun Terverifikasi</span> -->
             </div>
             <a href="<?= base_url('setting') ?>" class="dropdown-item has-icon">
                 <i class="fas fa-cog"></i> Settings

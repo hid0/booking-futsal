@@ -12,7 +12,7 @@ class Booking extends CI_Controller
 
     public function index()
     {
-        // redirect to data
+        // menu untuk admin
         redirect('booking/data');
     }
 
