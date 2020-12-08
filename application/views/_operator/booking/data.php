@@ -57,8 +57,8 @@
             </div>
         </div>
         <div id="add-booking" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="add-booking" aria-hidden="true" data-backdrop="">
-            <div class="modal-dialog modal-sm">
-                <form action="" method="POST" class="modal-content">
+            <div class="modal-dialog">
+                <form action="<?=base_url('booking/data');?>" method="POST" class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Tambah Booking</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -73,10 +73,11 @@
                         <div class="form-group">
                             <label for="tempat">Tempat</label>
                             <!-- <input type="text" name="nama" id="nama" class="form-control"> -->
+                            <!-- pilih lapangan -->
                             <select name="tempat" id="tempat" class="form-control">
                                 <option disabled selected>-- Pilih Tempat --</option>
-                                <option value="Kenari">Kenari</option>
-                                <option value="Champion">Champion</option>
+                                <option value="1">Kenari</option>
+                                <option value="2">Champion</option>
                             </select>
                         </div>
                         <div class="form-group">
