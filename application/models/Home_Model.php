@@ -16,4 +16,12 @@ class Home_Model extends CI_Model
         return $this->db->get('tb_booking')->result();
     }
 
+    function getLapanganId($id)
+    {
+        $this->db->select('id_lapangan, nama_tim, tgl, jam_mulai, jam_selesai');
+        $this->db->from('tb_booking');
+        $this->db->where('id_lapangan', $id);
+        $this->db->where('tgl', date('Y-m-d'));
+        return $this->db->get()->result();
+    }
 }

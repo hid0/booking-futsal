@@ -184,17 +184,19 @@
 								<th>Selesai</th>
 							</tr>
 						</thead>
-						<tbody>
-							<?php $no = 1 ?>
-							<?php foreach ($booking as $d) : ?>
-								<tr>
-									<td><?= $no; ?>.</td>
+						<tbody id="jadwal">
+							<?php //$no = 1 
+							?>
+							<?php //foreach ($booking as $d) : 
+							?>
+							<!-- <tr>
+									<td><?= $no++; ?>.</td>
 									<td><?= $d->nama_tim; ?></td>
 									<td><?= $d->jam_mulai; ?></td>
 									<td><?= $d->jam_selesai; ?></td>
-								</tr>
-							<?php endforeach; ?>
-							<?php $no++ ?>
+								</tr> -->
+							<?php //endforeach; 
+							?>
 						</tbody>
 					</table>
 				</div>
@@ -215,12 +217,23 @@
 				var lapangan = $(this).data('lapangan')
 				var nama = $(this).data('nama')
 				console.log('berhasil')
-				$('span#nama_lapangan').html(nama)
+				$('span#nama_lapangan').text(nama)
 			})
 			$(document).on('click', '#btnJadwal', function() {
-				// var lapangan = $(this).data('lapangan')
-				var nama = $(this).data('nama')
-				$('span#lapangan').append(nama)
+				var IdLapangan = $(this).data('lapangan')
+				var nama = $(this).data('nama') //data-nama
+				$('span#lapangan').text(nama)
+				$.ajax({
+					url: '<?= base_url('home/getlapanganajax'); ?>',
+					type: 'POST',
+					data: {
+						id_lapangan: IdLapangan
+					},
+					success: function(res) {
+						// menampilkan hasil data dari ajax
+						$("tbody#jadwal").html(res)
+					}
+				})
 			})
 		})
 	</script>

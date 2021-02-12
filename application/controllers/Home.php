@@ -22,4 +22,20 @@ class Home extends CI_Controller
         // echo " <a href=" . base_url('auth/logout') . " type=\"button\">logout</a>";
         $this->load->view('user/index', $data);
     }
+
+    public function getLapanganAjax()
+    {
+        $no = 1;
+        if (!empty($this->input->post('id_lapangan'))) {
+            $data['booking'] = $this->Home->getLapanganId($this->input->post('id_lapangan'));
+            foreach ($data as $data) {
+                echo $no++;
+                echo '<tr>';
+                echo '<td>' . $data->nama_tim . '</td>';
+                echo '<td>' . $data->jam_mulai . '</td>';
+                echo '<td>' . $data->jam_selesai . '</td>';
+                echo '</tr>';
+            }
+        }
+    }
 }
