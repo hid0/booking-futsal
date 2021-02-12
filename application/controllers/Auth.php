@@ -38,6 +38,7 @@ class Auth extends CI_Controller
                 // cek password
                 if (password_verify($password, $user['password'])) {
                     $data = [
+                        'id_user' => $user['id'],
                         'email' => $user['email'],
                         'name' => $user['name'],
                         'role_id' => $user['role_id']
@@ -48,7 +49,7 @@ class Auth extends CI_Controller
                     } else if ($user['role_id'] == 2) {
                         redirect('dashboard/op');
                     } else {
-                        redirect('home');
+                        redirect(base_url());
                     }
                 } else {
                     $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>

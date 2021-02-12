@@ -59,3 +59,23 @@ function count_student()
     $query = $ci->db->get('students');
     return $query->num_rows();
 }
+
+function indoDate($date)
+{
+    $tgl = explode(" ", $date);
+    $bln = array(
+        'January' => 'Januari',
+        'February' => 'Februari',
+        'March' => 'Maret',
+        'April' => 'April',
+        'May' => 'Mai',
+        'June' => 'Juni',
+        'July' => 'Juli',
+        'August' => 'Agustus',
+        'September' => 'September',
+        'October' => 'Oktober',
+        'November' => 'November',
+        'December' => 'Desember',
+    );
+    return $tgl['0'] . " " . $bln[$tgl[1]] . " " .$tgl[2];
+}

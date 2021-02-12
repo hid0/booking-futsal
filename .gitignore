@@ -2,7 +2,7 @@
 
 user_guide/
 assets/src
-
+dist/css
 application/cache/*
 !application/cache/index.html
 
